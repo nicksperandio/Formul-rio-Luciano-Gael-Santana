@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Formulário Parental – Luciano</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #F5F6FA;
+      color: #1a1a1a;
+      min-height: 100vh;
+      padding: 2rem 1rem 4rem;
+    }
+
+    .container {
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .header { margin-bottom: 2rem; }
+
+    .eyebrow {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: #185FA5;
+      margin-bottom: 8px;
+    }
+
+    h1 {
+      font-size: 22px;
+      font-weight: 500;
+      color: #1a1a1a;
+      line-height: 1.35;
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      font-size: 14px;
+      color: #555;
+      line-height: 1.7;
+      margin-bottom: 14px;
+    }
+
+    .badge-conf {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: #3B6D11;
+      background: #EAF3DE;
+      border: 1px solid #C0DD97;
+      border-radius: 6px;
+      padding: 4px 10px;
+    }
+
+    .card {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 14px;
+      padding: 1.75rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .section-title {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: #888;
+      margin-bottom: 1.5rem;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #ebebeb;
+    }
+
+    .q-block { margin-bottom: 1.5rem; }
+    .q-block:last-child { margin-bottom: 0; }
+
+    .q-block label {
+      display: block;
+      font-size: 14px;
+      color: #1a1a1a;
+      line-height: 1.6;
+      margin-bottom: 8px;
+    }
+
+    .q-num { font-size: 13px; color: #aaa; margin-right: 4px; }
+
+    textarea {
+      width: 100%;
+      padding: 10px 13px;
+      font-size: 14px;
+      font-family: inherit;
+      color: #1a1a1a;
+      background: #FAFAFA;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      resize: vertical;
+      line-height: 1.6;
+      transition: border-color 0.15s, box-shadow 0.15s;
+      min-height: 90px;
+    }
+
+    textarea.short { min-height: 68px; }
+
+    textarea:focus {
+      outline: none;
+      border-color: #378ADD;
+      box-shadow: 0 0 0 3px rgba(55,138,221,0.12);
+      background: #fff;
+    }
+
+    .scale-group { margin-top: 6px; }
+    .scale-btns { display: flex; gap: 8px; }
+
+    .scale-btn {
+      flex: 1;
+      padding: 9px 4px;
+      font-size: 14px;
+      text-align: center;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      background: #FAFAFA;
+      color: #555;
+      cursor: pointer;
+      transition: all 0.15s;
+      user-select: none;
+    }
+
+    .scale-btn:hover { background: #f0f0f0; border-color: #bbb; }
+    .scale-btn.active { background: #E6F1FB; border-color: #378ADD; color: #0C447C; font-weight: 600; }
+
+    .scale-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      color: #aaa;
+      margin-top: 6px;
+      margin-bottom: 12px;
+    }
+
+    .radio-group { display: flex; flex-direction: column; gap: 10px; margin-top: 6px; }
+
+    .radio-opt {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      color: #333;
+      cursor: pointer;
+    }
+
+    .radio-opt input[type="radio"] {
+      width: 17px;
+      height: 17px;
+      accent-color: #185FA5;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .submit-area {
+      margin-top: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .btn-submit {
+      padding: 11px 28px;
+      font-size: 15px;
+      font-weight: 500;
+      background: #185FA5;
+      color: #fff;
+      border: none;
+      border-radius: 9px;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    .btn-submit:hover { background: #0C447C; }
+    .btn-submit:disabled { background: #aaa; cursor: not-allowed; }
+
+    .submit-note { font-size: 12px; color: #aaa; }
+
+    .error-msg {
+      display: none;
+      background: #FCEBEB;
+      border: 1px solid #F09595;
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-size: 13px;
+      color: #791F1F;
+      margin-top: 1rem;
+    }
+
+    .success-screen {
+      display: none;
+      text-align: center;
+      padding: 3rem 2rem;
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 14px;
+      margin-top: 1rem;
+    }
+
+    .success-screen .icon {
+      width: 52px;
+      height: 52px;
+      background: #EAF3DE;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1rem;
+    }
+
+    .success-screen h2 { font-size: 18px; font-weight: 500; margin-bottom: 8px; color: #1a1a1a; }
+    .success-screen p { font-size: 14px; color: #666; line-height: 1.6; }
+
+    .field-error { border-color: #E24B4A !important; }
+
+    @media (max-width: 480px) {
+      .card { padding: 1.25rem; }
+      h1 { font-size: 19px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <div class="header">
+      <p class="eyebrow">Formulário individual · Equipe terapêutica Gael</p>
+      <h1>Como você está vivendo a parentalidade do Gael?</h1>
+      <p class="subtitle">
+        Suas respostas são confidenciais e serão lidas somente pela psicóloga Nicolly e pela equipe de supervisão.
+        Responda com sinceridade — não há resposta certa ou errada. Quanto mais aberto você for, mais assertivo será o nosso trabalho juntos.
+      </p>
+      <span class="badge-conf">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        Respostas confidenciais
+      </span>
+    </div>
+
+    <form id="formLuciano" action="https://formspree.io/f/mnjrjgye" method="POST">
+
+      <input type="hidden" name="_subject" value="Formulário parental – Luciano (Gael)" />
+
+      <!-- SOBRE O GAEL -->
+      <div class="card">
+        <p class="section-title">Sobre o Gael</p>
+
+        <div class="q-block">
+          <label for="q1"><span class="q-num">1.</span> Como você descreveria a sua relação com o Gael hoje? Como você sente que ele te vê?</label>
+          <textarea id="q1" name="1_relacao_com_gael" placeholder="Reflita sobre o vínculo de vocês dois..."></textarea>
+        </div>
+
+        <div class="q-block">
+          <label for="q2"><span class="q-num">2.</span> Quais são as suas maiores dificuldades na relação com o Gael atualmente?</label>
+          <textarea id="q2" name="2_dificuldades" placeholder="Situações, comportamentos, momentos que te desafiam..."></textarea>
+        </div>
+
+        <div class="q-block">
+          <label for="q3"><span class="q-num">3.</span> O que você celebra no Gael hoje — atitudes, conquistas, momentos que te orgulham?</label>
+          <textarea id="q3" name="3_celebracoes_orgulho" placeholder="Pode ser algo pequeno do cotidiano ou uma mudança que você percebeu..."></textarea>
+        </div>
+
+        <div class="q-block">
+          <label for="q4"><span class="q-num">4.</span> Você sente que o Gael te escuta de forma diferente do que escuta a Val? Se sim, como você percebe isso?</label>
+          <textarea id="q4" name="4_diferenca_escuta_gael" placeholder="Observe as diferenças nas reações dele com cada um de vocês..."></textarea>
+        </div>
+
+        <div class="q-block">
+          <label><span class="q-num">5.</span> Como você sente que o Gael está respondendo às regras e limites em casa atualmente?</label>
+          <div class="scale-group">
+            <div class="scale-btns" id="scale1">
+              <div class="scale-btn" onclick="pick('scale1', this, '1', 'q5_escala')">1</div>
+              <div class="scale-btn" onclick="pick('scale1', this, '2', 'q5_escala')">2</div>
+              <div class="scale-btn" onclick="pick('scale1', this, '3', 'q5_escala')">3</div>
+              <div class="scale-btn" onclick="pick('scale1', this, '4', 'q5_escala')">4</div>
+              <div class="scale-btn" onclick="pick('scale1', this, '5', 'q5_escala')">5</div>
+            </div>
+            <div class="scale-labels"><span>Muito difícil</span><span>Tranquilo</span></div>
+            <input type="hidden" id="q5_escala" name="5_escala_limites" value="" />
+            <textarea class="short" name="5_escala_limites_contexto" placeholder="Conta um pouco mais sobre essa nota — alguma situação recente que ilustra isso..."></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- PAPEL COMO PAI -->
+      <div class="card">
+        <p class="section-title">Sobre o seu papel como pai</p>
+
+        <div class="q-block">
+          <label for="q6"><span class="q-num">6.</span> Como você descreveria o seu papel na criação do Gael hoje? É o papel que você gostaria de ter?</label>
+          <textarea id="q6" name="6_papel_como_pai" placeholder="Pense no quanto você está presente, nas decisões que toma, no espaço que ocupa..."></textarea>
+        </div>
+
+        <div class="q-block">
+          <label for="q7"><span class="q-num">7.</span> Há momentos em que você gostaria de agir de forma diferente com o Gael, mas se contém? O que te impede?</label>
+          <textarea id="q7" name="7_o_que_impede_agir" placeholder="Pode ser por não querer gerar conflito, por incerteza, por outros motivos..."></textarea>
+        </div>
+
+        <div class="q-block">
+          <label for="q8"><span class="q-num">8.</span> Quais são as suas qualidades como pai na relação com ele? O que você sente que faz bem?</label>
+          <textarea id="q8" name="8_qualidades_pai" placeholder="Reconheça seus pontos fortes..."></textarea>
+        </div>
+
+        <div class="q-block">
+          <label for="q9"><span class="q-num">9.</span> O que você percebe que poderia mudar ou melhorar em si mesmo na relação com o Gael?</label>
+          <textarea id="q9" name="9_o_que_mudaria" placeholder="Reflita com calma..."></textarea>
+        </div>
+      </div>
+
+      <!-- DINÂMICA FAMILIAR -->
+      <div class="card">
+        <p class="section-title">Sobre a dinâmica familiar</p>
+
+        <div class="q-block">
+          <label for="q10"><span class="q-num">10.</span> Como você percebe a atuação da Val na relação com o Gael? O que você enxerga de positivo e o que poderia ser diferente?</label>
+          <textarea id="q10" name="10_percepcao_val" placeholder="Compartilhe sua percepção com liberdade..."></textarea>
+        </div>
+
+        <div class="q-block">
+          <label><span class="q-num">11.</span> Quem você sente que toma mais decisões em relação ao Gael no dia a dia?</label>
+          <div class="radio-group">
+            <label class="radio-opt"><input type="radio" name="11_quem_decide" value="Quase sempre a Val" /> Quase sempre a Val</label>
+            <label class="radio-opt"><input type="radio" name="11_quem_decide" value="Quase sempre eu" /> Quase sempre eu</label>
+            <label class="radio-opt"><input type="radio" name="11_quem_decide" value="Dividido de forma equilibrada" /> Dividido de forma equilibrada</label>
+            <label class="radio-opt"><input type="radio" name="11_quem_decide" value="Depende da situação" /> Depende da situação</label>
+          </div>
+        </div>
+
+        <div class="q-block">
+          <label for="q12"><span class="q-num">12.</span> Em que momentos você sente que a Val precisaria de mais apoio seu — e você não consegue ou não sabe como oferecer?</label>
+          <textarea id="q12" name="12_apoio_val" class="short" placeholder="Situações específicas, se quiser..."></textarea>
+        </div>
+
+        <div class="q-block">
+          <label for="q13"><span class="q-num">13.</span> Como você enxerga a relação entre a Val e o Gael atualmente? O que te preocupa e o que te tranquiliza?</label>
+          <textarea id="q13" name="13_visao_relacao_val_gael" placeholder="Sua visão de fora do par mãe-filho..."></textarea>
+        </div>
+      </div>
+
+      <!-- SOBRE A TERAPIA -->
+      <div class="card">
+        <p class="section-title">Sobre a terapia</p>
+
+        <div class="q-block">
+          <label for="q14"><span class="q-num">14.</span> O que você espera da terapia do Gael neste momento?</label>
+          <textarea id="q14" name="14_expectativas_terapia" class="short" placeholder="Objetivos, mudanças que deseja ver..."></textarea>
+        </div>
+
+        <div class="q-block">
+          <label for="q15"><span class="q-num">15.</span> Em que você sente que as terapeutas poderiam te ajudar mais — a você, como pai?</label>
+          <textarea id="q15" name="15_como_terapeutas_podem_ajudar" class="short" placeholder="Orientações, comunicação, estratégias..."></textarea>
+        </div>
+
+        <div class="q-block">
+          <label for="q16"><span class="q-num">16.</span> Há algo que você gostaria de mudar na forma como as sessões ou a comunicação com a equipe acontecem?</label>
+          <textarea id="q16" name="16_sugestoes_equipe" class="short" placeholder="Sugestões ou observações livres..."></textarea>
+        </div>
+      </div>
+
+      <!-- SOBRE VOCÊ -->
+      <div class="card">
+        <p class="section-title">Sobre você</p>
+
+        <div class="q-block">
+          <label for="q17"><span class="q-num">17.</span> Como você está se sentindo como pessoa — fora do papel de pai — neste momento da sua vida?</label>
+          <textarea id="q17" name="17_voce_como_pessoa" placeholder="Pode ser sincero sobre o que estiver vivendo..."></textarea>
+        </div>
+
+        <div class="q-block">
+          <label for="q18"><span class="q-num">18.</span> Há algo que você gostaria de compartilhar com a Nicolly que ainda não teve espaço para falar?</label>
+          <textarea id="q18" name="18_espaco_livre" class="short" placeholder="Espaço livre..."></textarea>
+        </div>
+      </div>
+
+      <div class="submit-area">
+        <button type="submit" class="btn-submit" id="btnSubmit">Enviar respostas</button>
+        <span class="submit-note">Suas respostas vão diretamente para a equipe da Nicolly.</span>
+      </div>
+
+      <div class="error-msg" id="errorMsg">
+        Algo deu errado ao enviar. Por favor, verifique sua conexão e tente novamente.
+      </div>
+
+    </form>
+
+    <div class="success-screen" id="successScreen">
+      <div class="icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3B6D11" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <h2>Obrigado, Luciano!</h2>
+      <p>Suas respostas foram registradas com sucesso.<br>A Nicolly entrará em contato em breve.</p>
+    </div>
+
+  </div>
+
+  <script>
+    function pick(groupId, btn, val, hiddenId) {
+      document.querySelectorAll('#' + groupId + ' .scale-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById(hiddenId).value = val;
+    }
+
+    const form = document.getElementById('formLuciano');
+    const btnSubmit = document.getElementById('btnSubmit');
+    const errorMsg = document.getElementById('errorMsg');
+    const successScreen = document.getElementById('successScreen');
+
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      let hasError = false;
+      form.querySelectorAll('textarea').forEach(t => {
+        if (!t.value.trim()) {
+          t.classList.add('field-error');
+          hasError = true;
+        } else {
+          t.classList.remove('field-error');
+        }
+      });
+
+      if (hasError) {
+        form.querySelector('.field-error').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return;
+      }
+
+      btnSubmit.disabled = true;
+      btnSubmit.textContent = 'Enviando...';
+      errorMsg.style.display = 'none';
+
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { 'Accept': 'application/json' }
+        });
+
+        if (res.ok) {
+          form.style.display = 'none';
+          successScreen.style.display = 'block';
+          successScreen.scrollIntoView({ behavior: 'smooth' });
+        } else {
+          throw new Error('Erro no envio');
+        }
+      } catch (err) {
+        errorMsg.style.display = 'block';
+        btnSubmit.disabled = false;
+        btnSubmit.textContent = 'Enviar respostas';
+      }
+    });
+
+    form.querySelectorAll('textarea').forEach(t => {
+      t.addEventListener('input', () => t.classList.remove('field-error'));
+    });
+  </script>
+
+</body>
+</html>
